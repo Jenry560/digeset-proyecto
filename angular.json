@@ -27,6 +27,8 @@
               }
             ],
             "styles": [
+              "src/assets/css/vendor.min.css",
+              "src/assets/css/icons.min.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -85,9 +87,15 @@
               }
             ],
             "styles": [
+              "src/assets/css/vendor.min.css",
+              "src/assets/css/icons.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/vendor.min.js",
+              "src/assets/js/app.js",
+              "src/assets/js/config.js"
+            ]
           }
         }
       }
