@@ -21,17 +21,18 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              "src/assets"
             ],
             "styles": [
               "src/assets/css/vendor.min.css",
               "src/assets/css/icons.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/vendor.min.js",
+              "src/assets/js/app.js",
+              "src/assets/js/config.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -81,10 +82,8 @@
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              "src/assets"
+
             ],
             "styles": [
               "src/assets/css/vendor.min.css",
