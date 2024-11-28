@@ -1,0 +1,42 @@
+<div class="col">
+  <div
+    class="page-title-head d-flex align-items-sm-center flex-sm-row flex-column"
+  >
+    <div class="flex-grow-1">
+      <h1 class="fs-24 fw-semibold m-0">{{ titulo }}</h1>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body" style="padding-bottom: 10px">
+      @if(visibleBoton){
+      <button
+        class="btn btn-primary waves-effect waves-light mb-3"
+        (click)="ejecutarBoton()"
+      >
+        <i class="fas fa-plus-circle"></i>
+        {{ labelBoton }}
+      </button>
+      } @if(labelBotonSecundario != ""){
+      <button
+        class="btn btn-primary waves-effect waves-light mb-3"
+        style="margin-left: 15px"
+        (click)="this.botonFuncionClick.emit()"
+      >
+        <i class="{{ iconBotonSecundario }}"></i>
+        {{ labelBotonSecundario }}
+      </button>
+      }
+      <!-- Morris chart - Sales -->
+      <div class="col">
+        <ng-content></ng-content>
+      </div>
+    </div>
+    <!-- /.card-body -->
+  </div>
+</div>
+
+<style>
+  button i {
+    margin-right: 5px;
+  }
+</style>

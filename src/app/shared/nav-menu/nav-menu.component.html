@@ -33,74 +33,97 @@
   <div data-simplebar>
     <!--- Sidenav Menu -->
     <ul class="side-nav">
-      <li class="side-nav-item">
-        <a
-          data-bs-toggle="collapse"
-          aria-expanded="false"
-          aria-controls="Consorcio"
-          href="#Consorcio"
-          class="side-nav-link"
-        >
-          <span class="menu-icon"><i class="fa-solid fa-building"></i></span>
-          <span class="menu-text"> Consorcio </span>
-          <span class="menu-arrow"></span>
+      <li class="side-nav-item" routerLink="/multas" routerLinkActive="active">
+        <a class="side-nav-link" routerLinkActive="active">
+          <span class="menu-icon">
+            <i class="ti ti-files"></i>
+          </span>
+          <span class="menu-text">Multas</span>
         </a>
-        <div class="collapse" routerLinkActive="show" id="Consorcio">
-          <ul class="sub-menu">
-            <li
-              class="side-nav-item"
-              routerLink="/consorcio/grupos-bancas"
-              routerLinkActive="active"
-            >
-              <a class="side-nav-link" routerLinkActive="active">
-                <span class="menu-text">Grupo de bancas</span>
-              </a>
-            </li>
-            <li
-              class="side-nav-item"
-              routerLink="/consorcio/rutas-recoleccion"
-              routerLinkActive="active"
-            >
-              <a class="side-nav-link" routerLinkActive="active">
-                <span class="menu-text">Rutas de recolección</span>
-              </a>
-            </li>
-            <li
-              class="side-nav-item"
-              routerLink="/consorcio/bancas"
-              routerLinkActive="active"
-            >
-              <a class="side-nav-link" routerLinkActive="active">
-                <span class="menu-text">Bancas</span>
-              </a>
-            </li>
-            <li class="side-nav-item">
-              <a class="side-nav-link">
-                <span class="menu-text">Monitoreo de bancas</span>
-              </a>
-            </li>
-            <li
-              class="side-nav-item"
-              routerLink="/consorcio/terminales"
-              routerLinkActive="active"
-            >
-              <a class="side-nav-link" routerLinkActive="active">
-                <span class="menu-text">Terminales</span>
-              </a>
-            </li>
-            <li
-              class="side-nav-item"
-              routerLink="/consorcio/usuarios"
-              routerLinkActive="active"
-            >
-              <a class="side-nav-link" routerLinkActive="active">
-                <span class="menu-text">Usuarios</span>
-              </a>
-            </li>
-          </ul>
-        </div>
+      </li>
+      <li class="side-nav-item" routerLink="/mapa" routerLinkActive="active">
+        <a class="side-nav-link" routerLinkActive="active">
+          <span class="menu-icon">
+            <i class="ti ti-map"></i>
+          </span>
+          <span class="menu-text">Mapa</span>
+        </a>
+      </li>
+      <li
+        class="side-nav-item"
+        routerLink="/comision-por-mes"
+        routerLinkActive="active"
+      >
+        <a class="side-nav-link" routerLinkActive="active">
+          <span class="menu-icon">
+            <i class="ti ti-chart-bar"></i>
+          </span>
+          <span class="menu-text">Comisión por Mes</span>
+        </a>
+      </li>
+      <li
+        class="side-nav-item"
+        routerLink="/acerca-de"
+        routerLinkActive="active"
+      >
+        <a class="side-nav-link" routerLinkActive="active">
+          <span class="menu-icon">
+            <i class="ti ti-user"></i>
+          </span>
+          <span class="menu-text">Acerca de</span>
+        </a>
+      </li>
+      <li
+        class="side-nav-item"
+        routerLink="/reporte-de-ingresos"
+        routerLinkActive="active"
+      >
+        <a class="side-nav-link" routerLinkActive="active">
+          <span class="menu-icon">
+            <i class="ti ti-report-money"></i>
+          </span>
+          <span class="menu-text">Reporte de Ingresos</span>
+        </a>
+      </li>
+      <li class="side-nav-item" routerLink="/agentes" routerLinkActive="active">
+        <a class="side-nav-link" routerLinkActive="active">
+          <span class="menu-icon">
+            <i class="ti ti-user-check"></i>
+          </span>
+          <span class="menu-text">Agentes</span>
+        </a>
+      </li>
+      <li
+        class="side-nav-item"
+        routerLink="/conceptos"
+        routerLinkActive="active"
+      >
+        <a class="side-nav-link" routerLinkActive="active">
+          <span class="menu-icon">
+            <i class="ti ti-list-details"></i>
+          </span>
+          <span class="menu-text">Conceptos</span>
+        </a>
+      </li>
+      <li
+        class="side-nav-item"
+        routerLink="/usuarios"
+        routerLinkActive="active"
+      >
+        <a class="side-nav-link" routerLinkActive="active">
+          <span class="menu-icon">
+            <i class="ti ti-user"></i>
+          </span>
+          <span class="menu-text">Usuarios</span>
+        </a>
       </li>
     </ul>
     <div class="clearfix"></div>
   </div>
 </div>
+
+<style>
+  .side-nav-item {
+    cursor: pointer;
+  }
+</style>

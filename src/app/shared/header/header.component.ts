@@ -4,7 +4,6 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [HeaderComponent],
   templateUrl: './header.component.html',
   styles: ``,
 })

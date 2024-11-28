@@ -7,4 +7,14 @@ export const routes: Routes = [
     component: DashboardComponent,
     // canActivate: [authGuard],
   },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./pages/pages.module').then((m) => m.PagesModule),
+    // canActivate: [authGuard],
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];

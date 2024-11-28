@@ -1,0 +1,146 @@
+<app-container-table
+  [titulo]="'Usuarios'"
+  [labelBoton]="'Agregar nuevo usuario'"
+  (botonFuncionClick)="openModal(null)"
+>
+  <ejs-grid
+    #grid
+    id="Grid"
+    [dataSource]="[]"
+    [allowExcelExport]="true"
+    [allowSorting]="true"
+    [allowPaging]="true"
+    [toolbar]="config.toolbarOptions"
+    [pageSettings]="config.pageSettings"
+    [filterSettings]="config.filterOptions"
+    [allowResizing]="true"
+    [allowFiltering]="true"
+    width="100%"
+    height="50vh"
+    (toolbarClick)="config.toolbarClick($event, grid)"
+  >
+    <e-columns>
+      <e-column
+        field="Id"
+        headerText="Numero de banca"
+        width="250"
+        minWidth="250"
+      ></e-column>
+      <e-column
+        field="Nombre"
+        headerText="Nombre"
+        width="300"
+        minWidth="300"
+      ></e-column>
+      <e-column
+        field="GrupoBanca"
+        headerText="Grupo"
+        width="200"
+        minWidth="200"
+      ></e-column>
+      <e-column
+        field="Ruta"
+        headerText="Ruta"
+        width="200"
+        minWidth="200"
+      ></e-column>
+
+      <e-column
+        field="Acciones"
+        headerText="Acciones"
+        width="150"
+        minWidth="150"
+        textAlign="Center"
+        [allowFiltering]="false"
+      >
+        <ng-template #template let-data>
+          <div class="hstack gap-1 justify-content-center">
+            <a
+              href="javascript:void(0);"
+              class="btn btn-soft-success btn-icon btn-sm rounded-circle"
+              (click)="openModal(data)"
+            >
+              <i class="ti ti-edit fs-16"></i
+            ></a>
+            <a
+              href="javascript:void(0);"
+              class="btn btn-soft-danger btn-icon btn-sm rounded-circle"
+            >
+              <i class="ti ti-trash"></i
+            ></a>
+          </div>
+        </ng-template>
+      </e-column>
+    </e-columns>
+  </ejs-grid>
+</app-container-table>
+
+<ng-template #content let-modal style="z-index: 1000">
+  <div class="modal-header">
+    <h3 class="modal-title">
+      {{ tituloModal }}
+    </h3>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+      (click)="closeModal()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="row mb-2">
+        <div class="col-12 mb-1">
+          <label for="cuenta" class="form-label">Cedula</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="Nombre"
+            [class.is-invalid]="InvalidControl('Nombre')"
+          />
+          <div *ngIf="InvalidControl('Nombre')" class="invalid-feedback">
+            El campo es requerido
+          </div>
+        </div>
+        <div class="col-12 mb-1">
+          <label for="cuenta" class="form-label">Nombre</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="Nombre"
+            [class.is-invalid]="InvalidControl('Nombre')"
+          />
+          <div *ngIf="InvalidControl('Nombre')" class="invalid-feedback">
+            El campo es requerido
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="cuenta" class="form-label">Clave</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="Nombre"
+            [class.is-invalid]="InvalidControl('Nombre')"
+          />
+          <div *ngIf="InvalidControl('Nombre')" class="invalid-feedback">
+            El campo es requerido
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      data-bs-dismiss="modal"
+      (click)="closeModal()"
+    >
+      Cerrar
+    </button>
+    <button class="btn btn-primary" style="color: white" (click)="saveData()">
+      Guardar
+    </button>
+  </div>
+</ng-template>

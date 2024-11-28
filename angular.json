@@ -26,12 +26,14 @@
             "styles": [
               "src/assets/css/vendor.min.css",
               "src/assets/css/icons.min.css",
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": [
               "src/assets/js/vendor.min.js",
               "src/assets/js/app.js",
-              "src/assets/js/config.js"
+              "src/assets/js/config.js",
+              "node_modules/apexcharts/dist/apexcharts.min.js"
             ]
           },
           "configurations": {
@@ -88,12 +90,14 @@
             "styles": [
               "src/assets/css/vendor.min.css",
               "src/assets/css/icons.min.css",
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": [
               "src/assets/js/vendor.min.js",
               "src/assets/js/app.js",
-              "src/assets/js/config.js"
+              "src/assets/js/config.js",
+              "node_modules/apexcharts/dist/apexcharts.min.js"
             ]
           }
         }
