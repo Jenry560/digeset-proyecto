@@ -8,6 +8,8 @@ import { DatePipe } from '@angular/common';
 import { HttP_SERVICE_URL } from './api.service';
 import { LocalStorageService } from './local-storage.service';
 import { DataResponse } from '../models/DataResponse';
+import { Usuarios } from '../models/Usuario';
+import { Agente } from '../models/Agente';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +23,8 @@ export class AuthService {
   private toastr = inject(ToastrService); // Inyección del servicio ToastrService
   static loadingHeader = true; // Esta variable se encarga de mostrar el loading en el header interceptor
   public isPuntoVenta = false; //Variable si el punto de venta esta en true osea esta en la pagina no se va mostrar ni el header ni la navegación
-  public usuarioData!: any;
+  public usuarioData: Usuarios = {} as Usuarios;
+  public agenteData: Agente = {} as Agente;
 
   formatDate(fecha: Date, format: string = 'yyyy-MM-dd'): string {
     const datepipe: DatePipe = new DatePipe('en-US');
@@ -88,7 +91,7 @@ export class AuthService {
   }
 
   public getDatauUser() {
-    return this.localStorageService.getValueByKey('userLog')?.data;
+    return this.localStorageService.getValueByKey('userLog');
   }
   //Funcion que retorna el token del usuario
   public getToken() {
@@ -122,5 +125,15 @@ export class AuthService {
   //Ajustar la fecha horario exacta ya que angular da problema
   adjusDate(date: Date) {
     return new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+  }
+
+  isAdmin() {
+    return this.usuarioData != null && this.usuarioData.UsuarioId == 1;
+  }
+  isUser() {
+    return this.usuarioData != null && this.usuarioData.UsuarioId > 1;
+  }
+  isAgente() {
+    return this.agenteData != null;
   }
 }
