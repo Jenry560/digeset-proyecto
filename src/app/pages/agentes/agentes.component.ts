@@ -3,6 +3,7 @@ import { GlobalConfigService } from '../../services/global-config.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { Agente } from '../../models/Agente';
 
 @Component({
   selector: 'app-agentes',
@@ -16,6 +17,7 @@ export class AgentesComponent {
   tituloModal = 'Registrar agente';
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
+  agentes: Agente[] = [];
   form!: FormGroup;
 
   ngOnInit(): void {

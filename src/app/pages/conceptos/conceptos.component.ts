@@ -3,6 +3,7 @@ import { GlobalConfigService } from '../../services/global-config.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { Concepto } from '../../models/Concepto';
 
 @Component({
   selector: 'app-conceptos',
@@ -16,6 +17,7 @@ export class ConceptosComponent {
   tituloModal = 'Registrar concepto';
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
+  conceptos: Concepto[] = [];
   form!: FormGroup;
 
   ngOnInit(): void {
@@ -24,14 +26,12 @@ export class ConceptosComponent {
 
   buildForm() {
     this.form = this.fb.group({
-      Id: [0],
-      Nombre: ['', Validators.required],
-      Direccion: [''],
-      Telefono: ['', [Validators.required]],
-      PlantillaId: [0],
-      RutaId: [null, Validators.required],
-      GrupoId: [null, Validators.required],
-      Encargado: ['', Validators.required],
+      AgenteId: [0, Validators.required], // Campo obligatorio
+      Nombre: ['', [Validators.required, Validators.minLength(3)]], // Mínimo 3 caracteres
+      Cedula: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]], // Cédula debe tener 11 caracteres numéricos
+      Clave: ['', [Validators.required, Validators.minLength(6)]], // Mínimo 6 caracteres para la clave
+      Estado: [false], // Valor por defecto de estado
+      UsuarioId: [this.auth.usuarioData.UsuarioId], // Campo obligatorio
     });
   }
 
