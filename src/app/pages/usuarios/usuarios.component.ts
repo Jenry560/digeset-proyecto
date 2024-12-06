@@ -3,6 +3,9 @@ import { GlobalConfigService } from '../../services/global-config.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { ApiService } from '../../services/api.service';
+import { DatosService } from '../../services/datos.service';
+import { Usuarios } from '../../models/Usuario';
 
 @Component({
   selector: 'app-usuarios',
@@ -10,9 +13,12 @@ import { AuthService } from '../../services/auth.service';
   styles: ``,
 })
 export class UsuariosComponent {
+  private api = inject(ApiService);
+  private datosService = inject(DatosService);
   @ViewChild('content') content!: any;
   config = inject(GlobalConfigService);
   private modalService = inject(NgbModal);
+  usuarios: Usuarios[] = [];
   tituloModal = 'Registrar usuarios';
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
@@ -20,18 +26,18 @@ export class UsuariosComponent {
 
   ngOnInit(): void {
     this.buildForm();
+    this.getData();
   }
 
   buildForm() {
     this.form = this.fb.group({
-      Id: [0],
-      Nombre: ['', Validators.required],
-      Direccion: [''],
-      Telefono: ['', [Validators.required]],
-      PlantillaId: [0],
-      RutaId: [null, Validators.required],
-      GrupoId: [null, Validators.required],
-      Encargado: ['', Validators.required],
+      UsuarioId: [0], // Puede estar vacío al crearlo
+      Nombre: ['', [Validators.required, Validators.minLength(3)]],
+      Cedula: [
+        '',
+        [Validators.required, Validators.pattern(/^\d{3}-\d{7}-\d{1}$/)],
+      ], // Formato dominicano
+      Clave: ['', [Validators.required, Validators.minLength(4)]],
     });
   }
 
@@ -40,6 +46,42 @@ export class UsuariosComponent {
       this.form.markAllAsTouched();
       return;
     }
+    this.api.PostData('Usuarios', this.form.value).subscribe((data) => {
+      if (data.IsSuccess) {
+        this.auth.showNotification('Exito', data.Message, 'success');
+        this.closeModal();
+        this.datosService.getUsuario();
+      } else {
+        this.auth.ShowMessaje('Error', data.Message, 'error');
+      }
+    });
+  }
+  deleteUsuario(id: number) {
+    this.auth
+      .ShowConfirm(
+        'Esta seguro de eliminar el usuario?',
+        '',
+        'Si, eliminar',
+        'question'
+      )
+      .then((result) => {
+        if (result) {
+          this.api.Delete(`Usuarios/${id}`).subscribe((data) => {
+            if (data.IsSuccess) {
+              this.auth.showNotification('Exito', data.Message, 'success');
+              this.datosService.getUsuario();
+            } else {
+              this.auth.ShowMessaje('Error', data.Message, 'error');
+            }
+          });
+        }
+      });
+  }
+
+  getData() {
+    this.datosService.Usuarios.subscribe((res) => {
+      this.usuarios = res;
+    });
   }
   openModal(model: any) {
     this.modalService.open(this.content, { centered: true });

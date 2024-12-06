@@ -16,27 +16,27 @@ import { Agente } from '../models/Agente';
 })
 export class AuthService {
   Titulo: string = ''; // Titulo de la pagina que se muestra en el navegador
-  ApiUrl = '/api/';
   private httpClient = inject(HttpClient); // Inyección del servicio HttpClient
   private localStorageService = inject(LocalStorageService); // Inyección del servicio LocalStorageService
 
   private toastr = inject(ToastrService); // Inyección del servicio ToastrService
   static loadingHeader = true; // Esta variable se encarga de mostrar el loading en el header interceptor
   public isPuntoVenta = false; //Variable si el punto de venta esta en true osea esta en la pagina no se va mostrar ni el header ni la navegación
-  public usuarioData: Usuarios = {} as Usuarios;
-  public agenteData: Agente = {} as Agente;
+  public usuarioData!: Usuarios;
+  public agenteData!: Agente;
+  tipoLogin: string = '';
 
   formatDate(fecha: Date, format: string = 'yyyy-MM-dd'): string {
     const datepipe: DatePipe = new DatePipe('en-US');
 
     return datepipe.transform(fecha, format) as string;
   }
-  public LoginUser(loginData: any): Observable<DataResponse> {
+  public LoginUser(
+    loginData: any,
+    tipo: string = 'Usuario'
+  ): Observable<DataResponse> {
     return this.httpClient
-      .post<DataResponse>(
-        `${HttP_SERVICE_URL}${this.ApiUrl}Auth/login`,
-        loginData
-      )
+      .post<DataResponse>(`${HttP_SERVICE_URL}/Auth/Login/${tipo}`, loginData)
       .pipe(
         map((response) => {
           // Maneja la respuesta exitosa
@@ -93,11 +93,6 @@ export class AuthService {
   public getDatauUser() {
     return this.localStorageService.getValueByKey('userLog');
   }
-  //Funcion que retorna el token del usuario
-  public getToken() {
-    return this.localStorageService.getValueByKey('userLog')?.token;
-  }
-  // Funcion que retorna la data del usuario logueado
 
   showNotification(
     title: string,
@@ -135,5 +130,9 @@ export class AuthService {
   }
   isAgente() {
     return this.agenteData != null;
+  }
+
+  isAuthenticated() {
+    return this.localStorageService.getValueByKey('userLog') != null;
   }
 }

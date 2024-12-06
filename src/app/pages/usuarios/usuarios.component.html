@@ -6,7 +6,7 @@
   <ejs-grid
     #grid
     id="Grid"
-    [dataSource]="[]"
+    [dataSource]="usuarios"
     [allowExcelExport]="true"
     [allowSorting]="true"
     [allowPaging]="true"
@@ -21,29 +21,14 @@
   >
     <e-columns>
       <e-column
-        field="Id"
-        headerText="Numero de banca"
-        width="250"
-        minWidth="250"
+        field="UsuarioId"
+        headerText="ID"
+        width="100"
+        isPrimaryKey="true"
       ></e-column>
-      <e-column
-        field="Nombre"
-        headerText="Nombre"
-        width="300"
-        minWidth="300"
-      ></e-column>
-      <e-column
-        field="GrupoBanca"
-        headerText="Grupo"
-        width="200"
-        minWidth="200"
-      ></e-column>
-      <e-column
-        field="Ruta"
-        headerText="Ruta"
-        width="200"
-        minWidth="200"
-      ></e-column>
+      <e-column field="Nombre" headerText="Nombre" width="200"></e-column>
+      <e-column field="Cedula" headerText="Cédula" width="150"></e-column>
+      <e-column field="Clave" headerText="Clave" width="150"></e-column>
 
       <e-column
         field="Acciones"
@@ -65,6 +50,7 @@
             <a
               href="javascript:void(0);"
               class="btn btn-soft-danger btn-icon btn-sm rounded-circle"
+              (click)="deleteUsuario(data.UsuarioId)"
             >
               <i class="ti ti-trash"></i
             ></a>
@@ -96,10 +82,10 @@
           <input
             type="text"
             class="form-control"
-            formControlName="Nombre"
-            [class.is-invalid]="InvalidControl('Nombre')"
+            formControlName="Cedula"
+            [class.is-invalid]="InvalidControl('Cedula')"
           />
-          <div *ngIf="InvalidControl('Nombre')" class="invalid-feedback">
+          <div *ngIf="InvalidControl('Cedula')" class="invalid-feedback">
             El campo es requerido
           </div>
         </div>
@@ -120,10 +106,10 @@
           <input
             type="password"
             class="form-control"
-            formControlName="Nombre"
-            [class.is-invalid]="InvalidControl('Nombre')"
+            formControlName="Clave"
+            [class.is-invalid]="InvalidControl('Clave')"
           />
-          <div *ngIf="InvalidControl('Nombre')" class="invalid-feedback">
+          <div *ngIf="InvalidControl('Clave')" class="invalid-feedback">
             El campo es requerido
           </div>
         </div>

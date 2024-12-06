@@ -16,13 +16,6 @@ export const HeadersInterceptor: HttpInterceptorFn = (
 ): Observable<HttpEvent<unknown>> => {
   let auth = new AuthService(); //crear instancia de Auth
 
-  const token = auth.getToken(); //obtener token
-  //Si existe token, agregarlo en las cabeceras
-  if (token) {
-    req = req.clone({
-      headers: req.headers.set('Authorization', `Bearer ${token}`),
-    });
-  }
   if (AuthService.loadingHeader) {
     //Cargando swal en el interceptor
     Swal.fire({

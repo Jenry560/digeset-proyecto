@@ -8,6 +8,9 @@ import { ConceptosComponent } from './conceptos/conceptos.component';
 import { ReporteIngresosComponent } from './reporte-ingresos/reporte-ingresos.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { MapasComponent } from './mapas/mapas.component';
+import { adminGuard } from '../guards/admin.guard';
+import { usuarioGuard } from '../guards/usuario.guard';
+import { agenteGuard } from '../guards/agente.guard';
 
 const routes: Routes = [
   {
@@ -21,10 +24,12 @@ const routes: Routes = [
   {
     path: 'agentes',
     component: AgentesComponent,
+    canActivate: [usuarioGuard],
   },
   {
     path: 'comision-por-mes',
     component: ComisionPorMesComponent,
+    canActivate: [agenteGuard],
   },
   {
     path: 'mapa',
@@ -33,14 +38,17 @@ const routes: Routes = [
   {
     path: 'conceptos',
     component: ConceptosComponent,
+    canActivate: [adminGuard],
   },
   {
     path: 'reporte-de-ingresos',
     component: ReporteIngresosComponent,
+    canActivate: [usuarioGuard],
   },
   {
     path: 'usuarios',
     component: UsuariosComponent,
+    canActivate: [adminGuard],
   },
 ];
 

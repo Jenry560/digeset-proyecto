@@ -3,7 +3,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
-import { environment } from '../environments/environment.prod';
+import { environment } from '../environments/environment';
 import { DataResponse } from '../models/DataResponse';
 
 export const HttP_SERVICE_URL = `${environment.apiUrl}`;

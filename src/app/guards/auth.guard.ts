@@ -7,7 +7,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   // Si no hay token, redirige al login
-  if (!authService.getToken()) {
+  if (!authService.isAuthenticated()) {
     router.navigate(['/auth/login']);
     return false;
   }
