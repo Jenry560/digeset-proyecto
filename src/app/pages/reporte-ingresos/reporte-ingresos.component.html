@@ -1,5 +1,5 @@
 <app-container-table [titulo]="'Reporte de ingresos'" [visibleBoton]="false">
-  <div class="row mb-2">
+  <div class="row mb-2" style="align-items: flex-end">
     <div class="col-lg-2 col-md-4 col-sm-6">
       <div class="form-group">
         <label for="cuenta" class="form-label">Mes</label>
@@ -22,12 +22,19 @@
         ></ng-select>
       </div>
     </div>
+    <div class="col-lg-2 col-md-5">
+      <button class="btn btn-primary all gap-1" (click)="getReporte()">
+        <i class="ti ti-search fs-22"></i>
+
+        Filtrar
+      </button>
+    </div>
   </div>
 
   <ejs-grid
     #grid
     id="Grid"
-    [dataSource]="[]"
+    [dataSource]="reporteIngresos"
     [allowExcelExport]="true"
     [allowSorting]="true"
     [allowPaging]="true"
@@ -42,28 +49,26 @@
   >
     <e-columns>
       <e-column
-        field="Id"
-        headerText="Numero de banca"
+        field="TipoMulta"
+        headerText="Tipo de Multa"
+        width="200"
+        minWidth="200"
+      ></e-column>
+
+      <e-column
+        field="CantidadMulta"
+        headerText="Cantidad de Multa"
+        width="200"
+        minWidth="200"
+        format="n2"
+      ></e-column>
+
+      <e-column
+        field="TotalIngresos"
+        headerText="Total de Ingresos"
         width="250"
         minWidth="250"
-      ></e-column>
-      <e-column
-        field="Nombre"
-        headerText="Nombre"
-        width="300"
-        minWidth="300"
-      ></e-column>
-      <e-column
-        field="GrupoBanca"
-        headerText="Grupo"
-        width="200"
-        minWidth="200"
-      ></e-column>
-      <e-column
-        field="Ruta"
-        headerText="Ruta"
-        width="200"
-        minWidth="200"
+        format="N0"
       ></e-column>
     </e-columns>
   </ejs-grid>

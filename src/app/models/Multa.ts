@@ -9,4 +9,5 @@ export interface Multa {
   Foto: string;
   FechaCreacion: Date;
   EstadoId: number;
+  AgenteId: number;
 }

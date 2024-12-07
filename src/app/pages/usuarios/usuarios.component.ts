@@ -35,15 +35,13 @@ export class UsuariosComponent {
     this.form = this.fb.group({
       UsuarioId: [0], // Puede estar vacío al crearlo
       Nombre: ['', [Validators.required, Validators.minLength(3)]],
-      Cedula: [
-        '',
-        [Validators.required, Validators.pattern(/^\d{3}-\d{7}-\d{1}$/)],
-      ], // Formato dominicano
+      Cedula: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]], // Cédula debe tener 11 caracteres numéricos
       Clave: ['', [Validators.required, Validators.minLength(4)]],
     });
   }
 
   async saveData() {
+    console.log(this.form.value.UsuarioId);
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -104,8 +102,8 @@ export class UsuariosComponent {
       this.tituloModal = 'Editar usuario';
       this.form.patchValue(model);
     } else {
-      this.tituloModal = 'Registrar usuarios';
-      this.form.reset();
+      this.tituloModal = 'Registrar usuario';
+      this.buildForm();
     }
     this.modalService.open(this.content, { centered: true });
   }

@@ -13,3 +13,7 @@
 @import "../node_modules/@syncfusion/ej2-angular-calendars/styles/bootstrap5.css";
 /* Toast */
 @import "../node_modules/ngx-toastr/toastr.css";
+
+.all {
+  width: 100%;
+}

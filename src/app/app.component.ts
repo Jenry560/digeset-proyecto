@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
     let dataLocal = this.auth.getDatauUser();
     if (dataLocal) {
       this.auth.tipoLogin = dataLocal.tipo;
-      console.log(dataLocal);
       if (this.auth.tipoLogin == 'Agente') {
         this.auth.agenteData = dataLocal.data;
       } else {

@@ -6,7 +6,7 @@
   <ejs-grid
     #grid
     id="Grid"
-    [dataSource]="[]"
+    [dataSource]="conceptos"
     [allowExcelExport]="true"
     [allowSorting]="true"
     [allowPaging]="true"
@@ -60,6 +60,7 @@
             <a
               href="javascript:void(0);"
               class="btn btn-soft-danger btn-icon btn-sm rounded-circle"
+              (click)="deleteData(data.ConceptoId)"
             >
               <i class="ti ti-trash"></i
             ></a>
@@ -86,76 +87,29 @@
   <div class="modal-body">
     <form [formGroup]="form">
       <div class="row mb-2">
-        <div class="col-md-6">
-          <label for="cuenta" class="form-label">Cedula</label>
+        <div class="col-md-7">
+          <label for="cuenta" class="form-label">Descripcion</label>
           <input
             type="text"
             class="form-control"
-            formControlName="Nombre"
-            [class.is-invalid]="InvalidControl('Nombre')"
+            formControlName="Descripcion"
+            [class.is-invalid]="InvalidControl('Descripcion')"
           />
-          <div *ngIf="InvalidControl('Nombre')" class="invalid-feedback">
+          <div *ngIf="InvalidControl('Descripcion')" class="invalid-feedback">
             El campo es requerido
           </div>
         </div>
-        <div class="col-md-6">
-          <label for="cuenta" class="form-label">Nombre</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="Nombre"
-            [class.is-invalid]="InvalidControl('Nombre')"
-          />
-          <div *ngIf="InvalidControl('Nombre')" class="invalid-feedback">
-            El campo es requerido
-          </div>
-        </div>
-      </div>
-      <div class="form-group mb-2">
-        <label for="cuenta" class="form-label">Concepto</label>
-        <ng-select clearable="false"></ng-select>
-        <div *ngIf="InvalidControl('GrupoId')" class="invalid-feedback">
-          El grupo es requerido
-        </div>
-      </div>
-      <div class="form-group mb-2">
-        <label for="cuenta" class="form-label">Concepto</label>
-        <textarea class="form-control" rows="3"></textarea>
-        <div *ngIf="InvalidControl('GrupoId')" class="invalid-feedback">
-          El grupo es requerido
-        </div>
-      </div>
-      <div class="row mb-2">
-        <div class="col-md-6">
-          <label for="cuenta" class="form-label">Latitud</label>
+        <div class="col-md-5 col-6">
+          <label for="cuenta" class="form-label">Monto</label>
           <input
             type="number"
             class="form-control"
-            formControlName="Nombre"
-            [class.is-invalid]="InvalidControl('Nombre')"
+            formControlName="Monto"
+            [class.is-invalid]="InvalidControl('Monto')"
           />
-          <div *ngIf="InvalidControl('Nombre')" class="invalid-feedback">
+          <div *ngIf="InvalidControl('Monto')" class="invalid-feedback">
             El campo es requerido
           </div>
-        </div>
-        <div class="col-md-6">
-          <label for="cuenta" class="form-label">Longitud</label>
-          <input
-            type="number"
-            class="form-control"
-            formControlName="Nombre"
-            [class.is-invalid]="InvalidControl('Nombre')"
-          />
-          <div *ngIf="InvalidControl('Nombre')" class="invalid-feedback">
-            El campo es requerido
-          </div>
-        </div>
-      </div>
-
-      <div class="row mb-2">
-        <div class="col">
-          <label class="form-label">Imagen</label>
-          <input class="form-control" type="file" />
         </div>
       </div>
     </form>

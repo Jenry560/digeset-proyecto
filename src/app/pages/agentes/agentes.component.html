@@ -6,7 +6,7 @@
   <ejs-grid
     #grid
     id="Grid"
-    [dataSource]="[]"
+    [dataSource]="agentes"
     [allowExcelExport]="true"
     [allowSorting]="true"
     [allowPaging]="true"
@@ -46,19 +46,29 @@
       ></e-column>
       <e-column
         field="Estado"
-        headerText="Estado"
+        headerText="Activo"
         width="150"
         minWidth="150"
         textAlign="Center"
         type="boolean"
-        format="true: 'Activo'; false: 'Inactivo'"
-      ></e-column>
-      <e-column
-        field="UsuarioId"
-        headerText="ID Usuario"
-        width="150"
-        minWidth="150"
-      ></e-column>
+      >
+        <ng-template #template let-data>
+          <div class="form-group switch-container">
+            <input
+              type="checkbox"
+              [id]="data.AgenteId"
+              data-switch="success"
+              [(ngModel)]="data.Estado"
+              (change)="updateEstado(data)"
+            />
+            <label
+              [for]="data.AgenteId"
+              [attr.data-on-label]="'Si'"
+              [attr.data-off-label]="'No'"
+            ></label>
+          </div>
+        </ng-template>
+      </e-column>
 
       <e-column
         field="Acciones"
@@ -76,12 +86,6 @@
               (click)="openModal(data)"
             >
               <i class="ti ti-edit fs-16"></i
-            ></a>
-            <a
-              href="javascript:void(0);"
-              class="btn btn-soft-danger btn-icon btn-sm rounded-circle"
-            >
-              <i class="ti ti-trash"></i
             ></a>
           </div>
         </ng-template>
@@ -111,10 +115,10 @@
           <input
             type="text"
             class="form-control"
-            formControlName="Nombre"
-            [class.is-invalid]="InvalidControl('Nombre')"
+            formControlName="Cedula"
+            [class.is-invalid]="InvalidControl('Cedula')"
           />
-          <div *ngIf="InvalidControl('Nombre')" class="invalid-feedback">
+          <div *ngIf="InvalidControl('Cedula')" class="invalid-feedback">
             El campo es requerido
           </div>
         </div>
@@ -135,10 +139,10 @@
           <input
             type="password"
             class="form-control"
-            formControlName="Nombre"
-            [class.is-invalid]="InvalidControl('Nombre')"
+            formControlName="Clave"
+            [class.is-invalid]="InvalidControl('Clave')"
           />
-          <div *ngIf="InvalidControl('Nombre')" class="invalid-feedback">
+          <div *ngIf="InvalidControl('Clave')" class="invalid-feedback">
             El campo es requerido
           </div>
         </div>
@@ -148,7 +152,7 @@
               type="checkbox"
               class="form-check-input"
               id="customCheck3"
-              [checked]="true"
+              formControlName="Estado"
             />
             <label class="form-check-label" for="customCheck3">Activo</label>
           </div>

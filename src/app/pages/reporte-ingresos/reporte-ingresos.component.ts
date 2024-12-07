@@ -1,5 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { GlobalConfigService } from '../../services/global-config.service';
+import { ReporteIngreso } from '../../models/ReporteIngreso';
+import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-reporte-ingresos',
@@ -8,6 +11,9 @@ import { GlobalConfigService } from '../../services/global-config.service';
 })
 export class ReporteIngresosComponent implements OnInit {
   config = inject(GlobalConfigService);
+  private api = inject(ApiService);
+  auth = inject(AuthService);
+  reporteIngresos: ReporteIngreso[] = [];
   meses: any = [];
   mesSelected = new Date().getMonth() + 1;
   years: number[] = [];
@@ -20,6 +26,18 @@ export class ReporteIngresosComponent implements OnInit {
       (_, i) => new Date().getFullYear() - i
     );
     this.selectedYear = new Date().getFullYear();
+    this.getReporte();
+  }
+
+  getReporte() {
+    this.reporteIngresos = [];
+    this.api
+      .GetData(
+        `Multas/reporteIngreso/${this.auth.usuarioData.UsuarioId}/${this.mesSelected}/${this.selectedYear}`
+      )
+      .subscribe((res: any) => {
+        this.reporteIngresos = res;
+      });
   }
 
   getMonths() {
