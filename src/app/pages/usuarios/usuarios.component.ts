@@ -6,6 +6,8 @@ import { AuthService } from '../../services/auth.service';
 import { ApiService } from '../../services/api.service';
 import { DatosService } from '../../services/datos.service';
 import { Usuarios } from '../../models/Usuario';
+import { DataResponse } from '../../models/DataResponse';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-usuarios',
@@ -41,20 +43,34 @@ export class UsuariosComponent {
     });
   }
 
-  saveData() {
+  async saveData() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
-    this.api.PostData('Usuarios', this.form.value).subscribe((data) => {
-      if (data.IsSuccess) {
-        this.auth.showNotification('Exito', data.Message, 'success');
-        this.closeModal();
-        this.datosService.getUsuario();
-      } else {
-        this.auth.ShowMessaje('Error', data.Message, 'error');
-      }
-    });
+
+    var respuesta: DataResponse = {} as DataResponse;
+
+    if (this.form.value.UsuarioId == 0) {
+      respuesta = await firstValueFrom(
+        this.api.PostData('Usuarios', this.form.value)
+      );
+    } else {
+      respuesta = await firstValueFrom(
+        this.api.PutData(
+          `Usuarios/${this.form.value.UsuarioId}`,
+          this.form.value
+        )
+      );
+    }
+
+    if (respuesta.IsSuccess) {
+      this.auth.showNotification('Exito', respuesta.Message, 'success');
+      this.closeModal();
+      this.datosService.getUsuario();
+    } else {
+      this.auth.ShowMessaje('Error', respuesta.Message, 'error');
+    }
   }
   deleteUsuario(id: number) {
     this.auth
@@ -84,6 +100,13 @@ export class UsuariosComponent {
     });
   }
   openModal(model: any) {
+    if (model != null) {
+      this.tituloModal = 'Editar usuario';
+      this.form.patchValue(model);
+    } else {
+      this.tituloModal = 'Registrar usuarios';
+      this.form.reset();
+    }
     this.modalService.open(this.content, { centered: true });
   }
   closeModal() {
