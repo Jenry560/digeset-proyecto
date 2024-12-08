@@ -64,20 +64,7 @@
           <span class="menu-text">Comisión por Mes</span>
         </a>
       </li>
-      }
-      <li
-        class="side-nav-item"
-        routerLink="/acerca-de"
-        routerLinkActive="active"
-      >
-        <a class="side-nav-link" routerLinkActive="active">
-          <span class="menu-icon">
-            <i class="ti ti-user"></i>
-          </span>
-          <span class="menu-text">Acerca de</span>
-        </a>
-      </li>
-      @if(auth.isUser() ){
+      } @if(auth.isUser() ){
       <li
         class="side-nav-item"
         routerLink="/reporte-de-ingresos"

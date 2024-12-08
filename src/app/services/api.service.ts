@@ -58,6 +58,31 @@ export class ApiService {
       );
   }
 
+  public PostFormData(endpoint: String, data: any): Observable<DataResponse> {
+    return this.httpClient
+      .post<DataResponse>(`${HttP_SERVICE_URL}${this.ApiUrl}/${endpoint}`, data)
+      .pipe(
+        map((res: any) => res),
+        catchError((error: HttpErrorResponse) => {
+          const responseError = error.error as DataResponse;
+          return of(responseError);
+        })
+      );
+  }
+
+  public PutFormData(endpoint: String, data: any): Observable<DataResponse> {
+    return this.httpClient
+      .put<DataResponse>(`${HttP_SERVICE_URL}${this.ApiUrl}/${endpoint}`, data)
+      .pipe(
+        map((res: DataResponse) => {
+          return res;
+        }),
+        catchError((error: HttpErrorResponse) => {
+          const responseError = error.error as DataResponse;
+          return of(responseError);
+        })
+      );
+  }
   // Realiza una peticion Put al servicio en especicico
   public PutData(
     endpoint: String,

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { NavMenuComponent } from './shared/nav-menu/nav-menu.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { DashboardComponent } from './shared/dashboard/dashboard.component';
@@ -9,7 +9,7 @@ import { DatosService } from './services/datos.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavMenuComponent, HeaderComponent],
+  imports: [RouterOutlet, NavMenuComponent, HeaderComponent, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

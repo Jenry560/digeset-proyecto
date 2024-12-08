@@ -10,7 +10,7 @@
     <div class="card-body" style="padding-bottom: 10px">
       @if(visibleBoton){
       <button
-        class="btn btn-primary waves-effect waves-light mb-3"
+        class="btn btn-success waves-effect waves-light mb-3"
         (click)="ejecutarBoton()"
       >
         <i class="fas fa-plus-circle"></i>
@@ -18,7 +18,7 @@
       </button>
       } @if(labelBotonSecundario != ""){
       <button
-        class="btn btn-primary waves-effect waves-light mb-3"
+        class="btn btn-success waves-effect waves-light mb-3"
         style="margin-left: 15px"
         (click)="this.botonFuncionClick.emit()"
       >

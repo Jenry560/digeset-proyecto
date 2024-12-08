@@ -48,6 +48,14 @@ export class AgentesComponent {
       this.form.markAllAsTouched();
       return;
     }
+    if (!this.checkIsCedulaUnique()) {
+      this.auth.ShowMessaje(
+        'Error',
+        'La cedula ya esta registrada en el sistema',
+        'error'
+      );
+      return;
+    }
 
     var respuesta: DataResponse = {} as DataResponse;
     if (this.form.value.AgenteId == 0) {
@@ -86,6 +94,12 @@ export class AgentesComponent {
           this.auth.ShowMessaje('Error', res.Message, 'error');
         }
       });
+  }
+
+  checkIsCedulaUnique() {
+    const cedula = this.form.get('Cedula')?.value;
+    const isUnique = this.agentes.every((user) => user.Cedula !== cedula);
+    return isUnique;
   }
   openModal(model: any) {
     if (model != null) {

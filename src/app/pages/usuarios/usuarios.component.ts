@@ -41,9 +41,12 @@ export class UsuariosComponent {
   }
 
   async saveData() {
-    console.log(this.form.value.UsuarioId);
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      return;
+    }
+    if (!this.checkIsCedulaUnique()) {
+      this.auth.ShowMessaje('Error', 'La cedula ya existe', 'error');
       return;
     }
 
@@ -90,6 +93,12 @@ export class UsuariosComponent {
           });
         }
       });
+  }
+
+  checkIsCedulaUnique() {
+    const cedula = this.form.get('Cedula')?.value;
+    const isUnique = this.usuarios.every((user) => user.Cedula !== cedula);
+    return isUnique;
   }
 
   getData() {

@@ -21,7 +21,8 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              "src/assets"
+              "src/assets",
+              "src/media"
             ],
             "styles": [
               "src/assets/css/vendor.min.css",
@@ -84,7 +85,9 @@
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
-              "src/assets"
+              "src/assets",
+              "src/media"
+
 
             ],
             "styles": [

@@ -9,17 +9,20 @@
           bindLabel="Nombre"
           bindValue="Id"
           [(ngModel)]="mesSelected"
+          (change)="getData()"
         ></ng-select>
       </div>
     </div>
-    <div class="col-lg-3 col-md-4 col-sm-6">
+    <div class="col-lg-4 col-md-5">
       <div
-        class="alert alert-primary d-flex align-items-center"
-        style="font-size: 18px; margin-top: 12px"
+        class="alert alert-success d-flex align-items-center"
+        style="font-size: 20px; margin-top: 12px"
       >
         <i class="fa-solid fa-coins me-2"></i>
         <b>Total de comision:</b>
-        <span class="fw-medium ms-1">{{ 500 | currency }}</span>
+        <span class="fw-medium ms-1">{{
+          comisionPorMes.TotalComision | currency
+        }}</span>
       </div>
     </div>
   </div>
@@ -27,7 +30,7 @@
   <ejs-grid
     #grid
     id="Grid"
-    [dataSource]="[]"
+    [dataSource]="comisionPorMes.Multas"
     [allowExcelExport]="true"
     [allowSorting]="true"
     [allowPaging]="true"
@@ -42,29 +45,79 @@
   >
     <e-columns>
       <e-column
-        field="Id"
-        headerText="Numero de banca"
-        width="250"
-        minWidth="250"
+        field="MultaId"
+        headerText="ID Multa"
+        width="150"
+        minWidth="150"
+      ></e-column>
+      <e-column
+        field="Cedula"
+        headerText="Cédula"
+        width="200"
+        minWidth="200"
       ></e-column>
       <e-column
         field="Nombre"
         headerText="Nombre"
+        width="200"
+        minWidth="200"
+      ></e-column>
+      <e-column
+        field="ConceptoId"
+        headerText="ID Concepto"
+        width="150"
+        minWidth="150"
+      ></e-column>
+
+      <e-column
+        field="Descripcion"
+        headerText="Descripción"
         width="300"
-        minWidth="300"
+        minWidth="250"
       ></e-column>
       <e-column
-        field="GrupoBanca"
-        headerText="Grupo"
-        width="200"
-        minWidth="200"
+        field="Latitud"
+        headerText="Latitud"
+        width="150"
+        minWidth="150"
+        format="N5"
       ></e-column>
       <e-column
-        field="Ruta"
-        headerText="Ruta"
+        field="Longitud"
+        headerText="Longitud"
+        width="150"
+        minWidth="150"
+        format="N5"
+      ></e-column>
+
+      <e-column
+        field="FechaCreacion"
+        headerText="Fecha de Creación"
         width="200"
         minWidth="200"
+        format="yyyy-MM-dd HH:mm:ss"
       ></e-column>
+
+      <e-column field="EstadoId" headerText="Estado" width="150" minWidth="150">
+        <ng-template #template let-data>
+          <span *ngIf="data.EstadoId == 0">Activa</span>
+          <span *ngIf="data.EstadoId == 1">Cobrada</span>
+          <span *ngIf="data.EstadoId == 2">Perdonada</span>
+        </ng-template>
+      </e-column>
+
+      <e-aggregates>
+        <e-aggregate>
+          <e-columns>
+            <e-column
+              field="Monto"
+              type="Sum"
+              format="C0"
+              footerTemplate="Total: ${Sum}"
+            ></e-column>
+          </e-columns>
+        </e-aggregate>
+      </e-aggregates>
     </e-columns>
   </ejs-grid>
 </app-container-table>

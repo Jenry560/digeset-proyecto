@@ -10,4 +10,7 @@ export interface Multa {
   FechaCreacion: Date;
   EstadoId: number;
   AgenteId: number;
+  Agente: string;
+  Concepto: string;
+  Monto: number;
 }

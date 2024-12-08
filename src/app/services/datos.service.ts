@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { Usuarios } from '../models/Usuario';
 import { AuthService } from './auth.service';
 import { Concepto } from '../models/Concepto';
@@ -36,21 +36,15 @@ export class DatosService {
     });
   }
 
-  getConceptos() {
-    this.api.GetData(this.endPointConceptos).subscribe((data) => {
-      if (data) {
-        this.ConceptosSubject.next(data);
-      }
-    });
+  async getConceptos() {
+    let data = await firstValueFrom(this.api.GetData(this.endPointConceptos));
+    this.ConceptosSubject.next(data);
   }
-  getAgentes() {
-    this.api
-      .GetData(`Agentes/${this.authService.usuarioData.UsuarioId}`)
-      .subscribe((data) => {
-        if (data) {
-          this.AgentesSubject.next(data);
-        }
-      });
+  async getAgentes() {
+    let data = await firstValueFrom(
+      this.api.GetData(`Agentes/${this.authService.usuarioData.UsuarioId}`)
+    );
+    this.AgentesSubject.next(data);
   }
 
   getMultas() {
@@ -59,20 +53,33 @@ export class DatosService {
       : `Multas/UsuarioId/${this.authService.usuarioData.UsuarioId}`;
     this.api.GetData(endpoint).subscribe((data) => {
       if (data) {
+        let dataConvert = data as Multa[];
+        dataConvert.map((x) => {
+          x.Agente =
+            this.AgentesSubject.getValue().find((y) => y.AgenteId == x.AgenteId)
+              ?.Nombre ?? '';
+          x.Concepto =
+            this.ConceptosSubject.getValue().find(
+              (y) => y.ConceptoId == x.ConceptoId
+            )?.Descripcion ?? '';
+          x.Monto =
+            this.ConceptosSubject.getValue().find(
+              (m) => m.ConceptoId == x.ConceptoId
+            )?.Monto ?? 0;
+        });
         this.MultasSubject.next(data);
       }
     });
   }
-  getAllData() {
+  async getAllData() {
+    await this.getConceptos();
+
     if (this.authService.isAdmin()) {
       this.getUsuario();
     }
     if (this.authService.isUser()) {
-      this.getAgentes();
+      await this.getAgentes();
     }
-    if (this.authService.isUser() || this.authService.isAgente()) {
-      this.getMultas();
-    }
-    this.getConceptos();
+    this.getMultas();
   }
 }

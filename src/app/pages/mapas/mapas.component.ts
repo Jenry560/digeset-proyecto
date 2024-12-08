@@ -1,6 +1,9 @@
 import { AfterViewInit, Component, inject } from '@angular/core';
 import { GlobalConfigService } from '../../services/global-config.service';
 import * as L from 'leaflet';
+import { Multa } from '../../models/Multa';
+import { DatosService } from '../../services/datos.service';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-mapas',
   templateUrl: './mapas.component.html',
@@ -8,14 +11,21 @@ import * as L from 'leaflet';
 })
 export class MapasComponent implements AfterViewInit {
   config = inject(GlobalConfigService);
+
+  private datosServices = inject(DatosService);
+  auth = inject(AuthService);
   meses: any = [];
   mesSelected = new Date().getMonth() + 1;
   years: number[] = [];
   selectedYear: number | undefined;
   private map!: L.Map;
+  private markersLayer: any; // Capa para los marcadores de las multas
+  multas: Multa[] = [];
+  AllMultas: Multa[] = [];
 
   ngAfterViewInit(): void {
     this.initMap();
+    this.getMultas();
   }
   ngOnInit(): void {
     this.getMonths();
@@ -24,6 +34,36 @@ export class MapasComponent implements AfterViewInit {
       (_, i) => new Date().getFullYear() - i
     );
     this.selectedYear = new Date().getFullYear();
+  }
+
+  async getMultas() {
+    this.datosServices.Multas.subscribe((res) => {
+      this.multas = res;
+      this.AllMultas = res;
+      this.filterMulta();
+    });
+  }
+
+  filterMulta() {
+    if (this.auth.isUser()) {
+      this.multas = this.AllMultas.filter(
+        (x) =>
+          new Date(x.FechaCreacion).getMonth() == this.mesSelected - 1 &&
+          new Date(x.FechaCreacion).getFullYear() == this.selectedYear
+      );
+    } else {
+      const today = new Date();
+      const fourWeeksAgo = new Date();
+      fourWeeksAgo.setDate(today.getDate() - 28); // Retrocede 4 semanas (28 días)
+
+      // Filtrar multas
+      this.multas = this.AllMultas.filter((x) => {
+        const fechaMulta = new Date(x.FechaCreacion); // Asegúrate de convertirlo a Date si es necesario
+        return fechaMulta >= fourWeeksAgo && fechaMulta <= today;
+      });
+    }
+    // filtrar por la multas de las ultimas 4 semanas
+    this.addMultasToMap();
   }
 
   private initMap(): void {
@@ -35,19 +75,50 @@ export class MapasComponent implements AfterViewInit {
       attribution: '&copy; OpenStreetMap contributors',
     }).addTo(this.map);
 
-    // Agregar marcador para Santo Domingo
-    const santoDomingo: any = {
-      coords: [18.4861, -69.9312], // Coordenadas de Santo Domingo
-      details: 'Santo Domingo, República Dominicana. Capital del país.',
-    };
+    // Crear una capa para los marcadores y agregarla al mapa
+    this.markersLayer = L.layerGroup().addTo(this.map);
+  }
 
-    const marker = L.marker(santoDomingo.coords)
-      .addTo(this.map)
-      .bindPopup(`<b>Ubicación:</b> Santo Domingo<br>${santoDomingo.details}`);
+  // Método para agregar multas al mapa
+  private addMultasToMap(): void {
+    // Limpiar marcadores existentes
+    this.markersLayer.clearLayers();
 
-    // Mostrar popup al hacer clic en el marcador
-    marker.on('click', () => {
-      marker.openPopup();
+    // Agregar marcadores para cada multa
+    this.multas.forEach((multa: Multa) => {
+      if (multa.Latitud && multa.Longitud) {
+        // Crear marcador
+        const marker = L.marker([multa.Latitud, multa.Longitud]);
+
+        // Configurar el contenido del popup
+        const popupContent = `
+          <b>Multa ID:</b> ${multa.MultaId}<br>
+          <b>Nombre:</b> ${multa.Nombre}<br>
+          <b>Descripción:</b> ${multa.Descripcion}<br>
+          <b>Estado:</b> ${
+            multa.EstadoId == 0
+              ? 'Activa'
+              : multa.EstadoId == 1
+              ? 'Cobrada'
+              : 'Perdonada'
+          }<br>
+          <b>Agente:</b> ${multa.Agente}<br>
+          <b>Fecha:</b> ${new Date(
+            multa.FechaCreacion
+          ).toLocaleDateString()}<br>
+          ${
+            multa.Foto
+              ? `<img src="data:image/png;base64,${multa.Foto}" alt="Foto de la multa" style="width:100%;max-width:200px;">`
+              : ''
+          }
+        `;
+
+        // Asociar el popup al marcador
+        marker.bindPopup(popupContent);
+
+        // Agregar marcador a la capa
+        marker.addTo(this.markersLayer);
+      }
     });
   }
 

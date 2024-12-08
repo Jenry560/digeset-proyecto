@@ -12,6 +12,7 @@ import { MultasComponent } from './multas/multas.component';
 import { ReporteIngresosComponent } from './reporte-ingresos/reporte-ingresos.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import {
+  AggregateService,
   ColumnMenuService,
   ExcelExportService,
   FilterService,
@@ -54,6 +55,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ExcelExportService,
     ColumnMenuService,
     ResizeService,
+    AggregateService,
   ],
 })
 export class PagesModule {}

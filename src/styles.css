@@ -17,3 +17,20 @@
 .all {
   width: 100%;
 }
+.e-grid .e-headercell {
+  background-color: #0c0c0d;
+  color: white; /* Color del texto del encabezado */
+}
+html[data-sidenav-size="sm-hover-active"]:not([data-layout="topnav"])
+  .sidenav-menu
+  .logo {
+  text-align: center;
+}
+
+.is-invalid .ng-select-container {
+  border-color: red;
+}
+
+.color-success{
+  color: #079a35;
+}

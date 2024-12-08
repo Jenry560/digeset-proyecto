@@ -28,6 +28,13 @@
         width="150"
         minWidth="150"
       ></e-column>
+      } @if(auth.isUser()){
+      <e-column
+        field="Agente"
+        headerText="Agente"
+        width="150"
+        minWidth="150"
+      ></e-column>
       }
       <e-column
         field="MultaId"
@@ -54,6 +61,12 @@
         minWidth="150"
       ></e-column>
       <e-column
+        field="Concepto"
+        headerText="Concepto"
+        width="200"
+        minWidth="200"
+      ></e-column>
+      <e-column
         field="Descripcion"
         headerText="Descripción"
         width="300"
@@ -73,12 +86,24 @@
         minWidth="150"
         format="N5"
       ></e-column>
+      <e-column field="Foto" headerText="Foto" width="200" minWidth="200">
+        <ng-template #template let-data>
+          <img
+            src="data:image/png;base64,{{ data.Foto }}"
+            width="40"
+            height="40"
+          />
+        </ng-template>
+      </e-column>
+
       <e-column
-        field="Foto"
-        headerText="Foto"
-        width="200"
-        minWidth="200"
+        field="Monto"
+        headerText="Monto"
+        width="250"
+        minWidth="250"
+        format="C0"
       ></e-column>
+
       <e-column
         field="FechaCreacion"
         headerText="Fecha de Creación"
@@ -86,8 +111,10 @@
         minWidth="200"
         format="yyyy-MM-dd HH:mm:ss"
       ></e-column>
+
       <e-column field="EstadoId" headerText="Estado" width="150" minWidth="150">
         <ng-template #template let-data>
+          @if(auth.isUser()){
           <select
             class="form-select"
             [(ngModel)]="data.EstadoId"
@@ -100,9 +127,15 @@
               {{ estatus.Descripcion }}
             </option>
           </select>
+          }@else {
+          <span *ngIf="data.EstadoId == 0">Activa</span>
+          <span *ngIf="data.EstadoId == 1">Cobrada</span>
+          <span *ngIf="data.EstadoId == 2">Perdonada</span>
+          }
         </ng-template>
       </e-column>
 
+      @if(auth.isUser()){
       <e-column
         field="Acciones"
         headerText="Acciones"
@@ -123,6 +156,19 @@
           </div>
         </ng-template>
       </e-column>
+      }
+      <e-aggregates>
+        <e-aggregate>
+          <e-columns>
+            <e-column
+              field="Monto"
+              type="Sum"
+              format="C0"
+              footerTemplate="Total: ${Sum}"
+            ></e-column>
+          </e-columns>
+        </e-aggregate>
+      </e-aggregates>
     </e-columns>
   </ejs-grid>
 </app-container-table>
@@ -141,7 +187,7 @@
     ></button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="form">
+    <form [formGroup]="form" enctype="multipart/form-data">
       <div class="row mb-2">
         <div class="col-md-6">
           <label for="cuenta" class="form-label">Cedula</label>
@@ -220,7 +266,13 @@
       <div class="row mb-2">
         <div class="col">
           <label class="form-label">Imagen</label>
-          <input class="form-control" type="file" formControlName="Foto" />
+          <input
+            class="form-control"
+            type="file"
+            id="fileInputId"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+          />
         </div>
       </div>
     </form>
@@ -234,7 +286,7 @@
     >
       Cerrar
     </button>
-    <button class="btn btn-primary" style="color: white" (click)="saveData()">
+    <button class="btn btn-success" style="color: white" (click)="saveData()">
       Guardar
     </button>
   </div>
