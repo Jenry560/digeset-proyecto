@@ -13,7 +13,7 @@
 @import "../node_modules/@syncfusion/ej2-angular-calendars/styles/bootstrap5.css";
 /* Toast */
 @import "../node_modules/ngx-toastr/toastr.css";
-
+@import "../node_modules/leaflet/dist/leaflet.css";
 .all {
   width: 100%;
 }
@@ -31,6 +31,6 @@ html[data-sidenav-size="sm-hover-active"]:not([data-layout="topnav"])
   border-color: red;
 }
 
-.color-success{
+.color-success {
   color: #079a35;
 }
