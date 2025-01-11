@@ -59,7 +59,7 @@ export class MapasComponent implements AfterViewInit {
       // Filtrar multas
       this.multas = this.AllMultas.filter((x) => {
         const fechaMulta = new Date(x.FechaCreacion); // Asegúrate de convertirlo a Date si es necesario
-        return fechaMulta >= fourWeeksAgo && fechaMulta <= today;
+        return fechaMulta >= fourWeeksAgo;
       });
     }
     // filtrar por la multas de las ultimas 4 semanas

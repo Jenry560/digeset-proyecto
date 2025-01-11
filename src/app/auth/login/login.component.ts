@@ -13,8 +13,8 @@ export class LoginComponent {
   private auth = inject(AuthService);
   private localStorageService = inject(LocalStorageService);
   form: FormGroup = this.fb.group({
-    Cedula: ['', Validators.required],
-    Clave: ['', Validators.required],
+    Cedula: ['12345678910', Validators.required],
+    Clave: ['123456', Validators.required],
     Tipo: ['Usuario'],
   });
 

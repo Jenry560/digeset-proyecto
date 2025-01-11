@@ -29,6 +29,7 @@ export class ComisionPorMesComponent implements OnInit {
         `Multas/comisionesPorMes/${this.auth.agenteData.AgenteId}/${this.mesSelected}`
       )
       .subscribe((res: any) => {
+        console.log(res);
         this.comisionPorMes = res;
       });
   }
