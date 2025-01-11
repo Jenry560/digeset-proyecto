@@ -67,6 +67,18 @@ export class MapasComponent implements AfterViewInit {
   }
 
   private initMap(): void {
+    // Configurar el ícono personalizado para los marcadores
+    const defaultIcon = L.icon({
+      iconUrl: 'assets/images/maker-icon.png', // Ruta al ícono en la carpeta 'assets'
+      iconSize: [25, 41], // Tamaño del ícono
+      iconAnchor: [12, 41], // Punto de anclaje
+      popupAnchor: [1, -34], // Punto de anclaje del popup
+      shadowSize: [41, 41], // Tamaño de la sombra
+    });
+
+    // Sobrescribir el ícono predeterminado de Leaflet
+    L.Marker.prototype.options.icon = defaultIcon;
+
     // Inicializar el mapa centrado en la República Dominicana
     this.map = L.map('map').setView([18.7357, -70.1627], 8); // Coordenadas aproximadas del centro del país
 
@@ -77,8 +89,13 @@ export class MapasComponent implements AfterViewInit {
 
     // Crear una capa para los marcadores y agregarla al mapa
     this.markersLayer = L.layerGroup().addTo(this.map);
-  }
 
+    // Agregar un marcador de ejemplo
+    L.marker([18.7357, -70.1627])
+      .addTo(this.markersLayer)
+      .bindPopup('Centro de la República Dominicana')
+      .openPopup();
+  }
   // Método para agregar multas al mapa
   private addMultasToMap(): void {
     // Limpiar marcadores existentes
