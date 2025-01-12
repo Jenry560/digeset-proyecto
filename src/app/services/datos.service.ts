@@ -28,12 +28,9 @@ export class DatosService {
   private MultasSubject = new BehaviorSubject<Multa[]>([]);
   Multas = this.MultasSubject.asObservable();
 
-  getUsuario() {
-    this.api.GetData(this.endPointUsuarios).subscribe((data) => {
-      if (data) {
-        this.UsuariosSubject.next(data);
-      }
-    });
+  async getUsuario() {
+    var data = await firstValueFrom(this.api.GetData(this.endPointUsuarios));
+    this.UsuariosSubject.next(data);
   }
 
   async getConceptos() {
@@ -72,14 +69,16 @@ export class DatosService {
     });
   }
   async getAllData() {
+    AuthService.loadingHeader = false;
     await this.getConceptos();
 
     if (this.authService.isAdmin()) {
-      this.getUsuario();
+      await this.getUsuario();
     }
     if (this.authService.isUser()) {
       await this.getAgentes();
     }
+    AuthService.loadingHeader = true;
     this.getMultas();
   }
 }
