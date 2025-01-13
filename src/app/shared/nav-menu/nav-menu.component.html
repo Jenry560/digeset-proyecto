@@ -34,7 +34,7 @@
     <!--- Sidenav Menu -->
     <ul class="side-nav">
       @if(auth.isAgente() || auth.isUser()){
-      <li class="side-nav-item" routerLink="/multas" routerLinkActive="active">
+      <li class="side-nav-item" (click)="closeMenu()" routerLink="/multas" routerLinkActive="active">
         <a class="side-nav-link" routerLinkActive="active">
           <span class="menu-icon">
             <i class="ti ti-files"></i>
@@ -43,7 +43,7 @@
         </a>
       </li>
       } @if(auth.isAgente() || auth.isUser()){
-      <li class="side-nav-item" routerLink="/mapa" routerLinkActive="active">
+      <li class="side-nav-item" routerLink="/mapa" (click)="closeMenu()" routerLinkActive="active">
         <a class="side-nav-link" routerLinkActive="active">
           <span class="menu-icon">
             <i class="ti ti-map"></i>
@@ -56,6 +56,7 @@
         class="side-nav-item"
         routerLink="/comision-por-mes"
         routerLinkActive="active"
+        (click)="closeMenu()"
       >
         <a class="side-nav-link" routerLinkActive="active">
           <span class="menu-icon">
@@ -69,6 +70,7 @@
         class="side-nav-item"
         routerLink="/reporte-de-ingresos"
         routerLinkActive="active"
+        (click)="closeMenu()"
       >
         <a class="side-nav-link" routerLinkActive="active">
           <span class="menu-icon">
@@ -79,7 +81,7 @@
       </li>
       } @if(auth.isUser() ){
 
-      <li class="side-nav-item" routerLink="/agentes" routerLinkActive="active">
+      <li class="side-nav-item" (click)="closeMenu()" routerLink="/agentes" routerLinkActive="active">
         <a class="side-nav-link" routerLinkActive="active">
           <span class="menu-icon">
             <i class="ti ti-user-check"></i>
@@ -93,6 +95,7 @@
         class="side-nav-item"
         routerLink="/conceptos"
         routerLinkActive="active"
+        (click)="closeMenu()"
       >
         <a class="side-nav-link" routerLinkActive="active">
           <span class="menu-icon">
@@ -107,6 +110,7 @@
         class="side-nav-item"
         routerLink="/usuarios"
         routerLinkActive="active"
+        (click)="closeMenu()"
       >
         <a class="side-nav-link" routerLinkActive="active">
           <span class="menu-icon">

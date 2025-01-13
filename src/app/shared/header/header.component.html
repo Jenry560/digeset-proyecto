@@ -23,7 +23,7 @@
       </a>
 
       <!-- Sidebar Menu Toggle Button -->
-      <button class="sidenav-toggle-button px-2">
+      <button class="sidenav-toggle-button px-2" (click)="toggleSidenav()">
         <i class="ti ti-menu-deep fs-24"></i>
       </button>
 
@@ -40,18 +40,7 @@
     </div>
 
     <div class="d-flex align-items-center gap-2">
-      <!-- Search for small devices -->
-      <div class="topbar-item d-flex d-xl-none">
-        <button
-          class="topbar-link"
-          data-bs-toggle="modal"
-          data-bs-target="#searchModal"
-          type="button"
-        >
-          <i class="ti ti-search fs-22"></i>
-        </button>
-      </div>
-
+    
       <!-- Light/Dark Mode Button -->
       <div class="topbar-item d-none d-sm-flex">
         <button class="topbar-link" id="light-dark-mode" type="button">
